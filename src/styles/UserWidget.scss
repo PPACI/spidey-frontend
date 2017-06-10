@@ -1,0 +1,61 @@
+.user-widget {
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+
+  &.is-shown {
+    opacity: 1;
+    pointer-events: inherit;
+  }
+
+  position: absolute;
+  z-index: 9999;
+  transform: translate(170%, 50%);
+  background-color: #fff;
+  border: 1px solid #DADADA;
+  box-sizing: border-box;
+
+  .user-close {
+    position: absolute;
+    right: 0;
+    padding: 5px;
+
+    &:hover { cursor: pointer; }
+  }
+
+  header {
+    $username-height: 20px;
+
+    .user-username {
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      height: $username-height;
+      box-sizing: border-box;
+      font-weight: bold;
+      font-size: 1.3em;
+    }
+
+    $avatar-height: 120px;
+
+    color: #fff;
+    background-color: #000;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    max-height: $avatar-height;
+    margin-bottom: $avatar-height / 2;
+
+    .user-picture {
+      display: block;
+      margin: auto;
+      transform: translateY(($avatar-height/2) - $username-height);
+      height: $avatar-height;
+      width: $avatar-height;
+      border-radius: 50%;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.8) inset;
+    }
+  }
+
+  .user-description {
+    padding: 20px;
+  }
+}

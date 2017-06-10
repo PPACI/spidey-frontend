@@ -1,0 +1,25 @@
+.graph-wrapper {
+    border: 2px solid #DADADA;
+    background-color: #fff;
+    position: relative;
+
+    .main-graph {
+        padding: 20px;
+        margin: 0 10px;
+        width: auto;
+        height: 600px;
+
+        &.centered {
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+}
+
+@media (min-width: 768px) {
+    .graph-wrapper {
+        margin: auto;
+        width: 80% !important;
+    }
+}

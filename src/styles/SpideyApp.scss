@@ -1,0 +1,38 @@
+@import './_shared.scss';
+
+@keyframes animatedBackground {
+    0%      { background-position: 50% 90%; }
+    50%     { background-position: 50% 10%; }
+    100%    { background-position: 50% 90%; }
+}
+
+body { 
+    margin: 0;
+    background-image: url("https://www.transparenttextures.com/patterns/black-thread-light.png");
+    /* TODO replace by downloaded image */
+}
+
+.nav-bar {
+    display: flex;
+    height: 120px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: $primary !important;
+    background-size: 320%;
+    background-image: url('/images/spider_web.svg') !important;
+    background-repeat: repeat-x;
+    animation: animatedBackground 360s linear infinite;
+
+    h1 {
+        font-family: 'Starlord', Arial, sans-serif;
+        font-size: 64px !important;
+    }
+
+}
+
+@media (min-width: 768px) {
+   .nav-bar {
+       background-size: 200%;
+   }
+}
