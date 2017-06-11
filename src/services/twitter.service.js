@@ -16,16 +16,16 @@ export default class TwitterService {
         //     color: '#'+Math.floor(Math.random()*16777215).toString(16)
         // }));
 
-        /*return fetch('http://localhost:8080/graph/'+text)
-            .then(r => r.json());*/
+        return fetch('http://localhost:8080/graph/'+text)
+            .then(r => r.json());
 
 
-        const graph = generateRandomgGraph();
+        /*const graph = generateRandomgGraph();
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(graph);
             }, 1500);
-        });
+        });*/
     }
 
 }
