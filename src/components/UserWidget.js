@@ -20,9 +20,9 @@ export default class UserWidget extends React.Component {
                 <FontIcon className="material-icons" color="#fff">close</FontIcon>
             </div>
 
-            <header>
-                <div className="user-username">{this.props.username}</div>
-                <img className="user-picture" src="https://randomuser.me/api/portraits/women/64.jpg" alt="Avatar"/>
+            <header style={{ backgroundImage: `url(${this.props.bannerPictureUrl})` }}>
+                <div className="user-username">{this.props.userName}</div>
+                <img className="user-picture" src={this.props.profilePictureUrl} alt="Avatar" />
             </header>
 
             <div className="user-description">

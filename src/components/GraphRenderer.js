@@ -65,17 +65,26 @@ export default class GraphRenderer extends React.Component {
     handleClickNode = (e) => {
         const { node } = e.data;
 
-        console.log(node);
+        console.log("node", node);
 
-        const userNode = {
-            x: node.x,
-            y: node.y,
-            username: node.label,
-            description: node.description,
-            isShown: true
-        };
+        this.props.twitterService.getUser(node.label)
+            .then(user => {
+                console.info("user", user);
 
-        this.setState({ userNode });
+                const userNode = {
+                    x: node.x,
+                    y: node.y,
+                    userName: user.userName,
+                    description: user.description,
+                    profilePictureUrl: user.profilePictureUrl.replace('_normal', ''),
+                    bannerPictureUrl: user.bannerPictureUrl,
+                    accountUrl: user.accountUrl,
+                    isShown: true
+                };
+
+                this.setState({ userNode });
+            })
+            .catch(e => console.error("[twitterService.getUser]", e))
     };
 
 

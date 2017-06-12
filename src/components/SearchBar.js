@@ -40,7 +40,7 @@ export default class SearchBar extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log("text", this.state.text);
+        console.log("Twitter username", this.state.text);
         this.props.handler(this.state.text);
     };
 

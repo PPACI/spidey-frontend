@@ -13,13 +13,13 @@ export default class SearchContainer extends React.Component {
     render() {
         return (
             <div>
-                <SearchBar handler={this.search} />
-                <GraphRenderer graph={this.state.graph} isLoading={this.state.isLoading} />
+                <SearchBar handler={this.getGraph} />
+                <GraphRenderer graph={this.state.graph} isLoading={this.state.isLoading} twitterService={this.props.twitterService} />
             </div>
         );
     }
 
-    search = (text) => {
+    getGraph = (text) => {
         this.setState({isLoading: true});
 
         this.props.twitterService.getGraph(text)

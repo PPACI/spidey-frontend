@@ -18,7 +18,17 @@
   .user-close {
     position: absolute;
     right: 0;
-    padding: 5px;
+    margin: 3px;
+    padding: 2px;
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.3);
+
+    & > .material-icons {
+      font-size: 1.2em !important;
+    }
 
     &:hover { cursor: pointer; }
   }
@@ -40,11 +50,15 @@
 
     color: #fff;
     background-color: #000;
+    background-size: cover;
+    background-position: 0 50%;
+
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
     max-height: $avatar-height;
     margin-bottom: $avatar-height / 2;
 
     .user-picture {
+      background-color: #fff;
       display: block;
       margin: auto;
       transform: translateY(($avatar-height/2) - $username-height);
