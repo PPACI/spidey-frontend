@@ -16,7 +16,7 @@ export default class SearchBar extends React.Component {
         return (
             <div className="form-wrapper">
                 <form className="search-bar-wrapper" onSubmit={this.handleSubmit}>
-                    <TextField className="search-bar" floatingLabelText="URL of a Tweet"
+                    <TextField className="search-bar" floatingLabelText="Twitter username"
                                 underlineStyle={underlineStyle} underlineShow={!this.state.active}
                                 onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur} />
                     <RaisedButton secondary={true} type="submit" label="OK" />

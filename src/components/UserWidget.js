@@ -8,19 +8,15 @@ const userWidgetWidth = 250;
 
 export default class UserWidget extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return <div className={ 'user-widget' + (this.props.isShown ? ' is-shown': '')}
-                    style={{top: this.props.y, left: this.props.x, width: userWidgetWidth}}>
+                    style={this.getPosition()}>
 
             <div className="user-close" onClick={this.close}>
                 <FontIcon className="material-icons" color="#fff">close</FontIcon>
             </div>
 
-            <header style={{ backgroundImage: `url(${this.props.bannerPictureUrl})` }}>
+            <header style={this.getBanner()}>
                 <div className="user-username">{this.props.userName}</div>
                 <img className="user-picture" src={this.props.profilePictureUrl} alt="Avatar" />
             </header>
@@ -30,6 +26,23 @@ export default class UserWidget extends React.Component {
             </div>
         </div>
     }
+
+    getPosition = () => {
+        const [ top, left ] = [
+            this.props.y / this.props.ratioY,
+            this.props.x / this.props.ratioX
+        ].map(coordinate => isNaN(coordinate) ? 0 : coordinate);
+
+        return {
+            top,
+            left,
+            width: userWidgetWidth
+        };
+    };
+
+    getBanner = () => {
+        return { backgroundImage: `url(${this.props.bannerPictureUrl})` };
+    };
 
     close = () => {
       this.props.closeHandler();

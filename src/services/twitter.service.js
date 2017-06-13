@@ -1,4 +1,4 @@
-import generateRandomgGraph from '../utils/generateRandomGraph';
+import generateRandomGraph from '../utils/generateRandomGraph';
 
 export default class TwitterService {
 
@@ -20,7 +20,7 @@ export default class TwitterService {
                     .then(graph => graph.json());
 
 
-        /*const graph = generateRandomgGraph();
+        /*const graph = generateRandomGraph();
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(graph);
