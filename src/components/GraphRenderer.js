@@ -8,6 +8,7 @@ import UserWidget from './UserWidget';
 
 import "../styles/GraphRenderer.css";
 import Colors from "../utils/colors";
+import {THRESHOLD, THRESHOLD_UP} from "../utils/constants";
 
 const sigmaStyle = {
     width: "auto",
@@ -25,6 +26,8 @@ const refreshIndicatorStyle = {
     display: 'inline-block',
     position: 'relative'
 };
+
+const sigmaRefreshSettings = { skipIndexation: true };
 
 export default class GraphRenderer extends React.Component {
 
@@ -87,7 +90,17 @@ export default class GraphRenderer extends React.Component {
 
         const nodes = this.sigma.graph.nodes();
         const node = nodes.find((node) => node.label.toLowerCase().indexOf(text) > -1);
-        if(typeof(node) === 'undefined') return;
+        if(!node) return;
+
+        setTimeout(() => {
+            nodes.forEach(n => {
+                this.setPreviousColor(n);
+                n.color = n.previousColor;
+            });
+
+            this.selectNode(node);
+            this.sigma.refresh(sigmaRefreshSettings);
+        }, THRESHOLD);
 
         window.sigma.misc.animation.camera(
             this.sigma.camera,
@@ -102,25 +115,45 @@ export default class GraphRenderer extends React.Component {
         );
     };
 
-    initSigmaContext = ({ sigma }) => {
+    initSigmaContext = (sigmaWrapper) => {
+        if(!sigmaWrapper) return;
+
+        const { sigma } = sigmaWrapper ;
+
         this.sigma = sigma;
         this.bindEvents(sigma);
         this.computeRatios(sigma);
     };
 
     bindEvents = (sigma) => {
-        sigma.bind('overNode', () => {
+        sigma.bind('overNode', (e) => {
             document.body.style.cursor = 'pointer';
+
+            this.selectNode(e.data.node);
+            this.sigma.refresh(sigmaRefreshSettings);
         });
 
-        sigma.bind('outNode', () => {
+        sigma.bind('outNode', (e) => {
             document.body.style.cursor = 'inherit';
+
+            e.data.node.color = e.data.node.previousColor;
+            this.sigma.refresh(sigmaRefreshSettings);
         });
 
-        // FIXME find a way to keep drag after binding on clickStage event
-        /*sigma.bind('clickStage', () => {
-            this.closeUserWidget();
-        });*/
+        sigma.bind('clickStage', () => {
+            setTimeout(() => this.closeUserWidget(), 0);
+        });
+    };
+
+    setPreviousColor = (node) => {
+        if(!node.previousColor) {
+           node.previousColor = node.color;
+        }
+    };
+
+    selectNode = (node) => {
+        this.setPreviousColor(node);
+        node.color = Colors.PRIMARY;
     };
 
     computeRatios = (sigma) => {
@@ -145,7 +178,7 @@ export default class GraphRenderer extends React.Component {
             const { userNode } = this.state;
             const newUserNode = Object.assign({}, userNode, ratios);
             this.setState({ userNode: newUserNode });
-        }, 500);
+        }, THRESHOLD_UP);
     };
 
     handleClickNode = (e) => {

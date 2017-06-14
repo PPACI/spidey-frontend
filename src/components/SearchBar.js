@@ -2,6 +2,7 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import '../styles/SearchBar.css';
+import {THRESHOLD} from "../utils/constants";
 
 const underlineStyle = { color: "#fff"};
 
@@ -9,6 +10,7 @@ export default class SearchBar extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.state = { text: null, active: false };
     }
 
@@ -30,7 +32,7 @@ export default class SearchBar extends React.Component {
     };
 
     handleFocus = () => {
-        setTimeout(() => this.setState({ active: true }), 200);
+        setTimeout(() => this.setState({ active: true }), THRESHOLD);
     };
 
     handleBlur = (e) => {
