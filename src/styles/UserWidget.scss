@@ -33,18 +33,7 @@
   }
 
   header {
-    $username-height: 20px;
-
-    .user-username {
-      padding: 10px;
-      display: flex;
-      justify-content: center;
-      height: $username-height;
-      box-sizing: border-box;
-      font-weight: bold;
-      font-size: 1.3em;
-    }
-
+    $height: 20px;
     $avatar-height: 120px;
 
     color: #fff;
@@ -60,12 +49,20 @@
       background-color: #fff;
       display: block;
       margin: auto;
-      transform: translateY(($avatar-height/2) - $username-height);
+      transform: translateY(($avatar-height/2) - $height);
       height: $avatar-height;
       width: $avatar-height;
       border-radius: 50%;
       box-shadow: 0 1px 6px rgba(0, 0, 0, 0.8) inset;
     }
+  }
+
+  .user-username {
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    font-weight: bold;
+    font-size: 1.3em;
   }
 
   .user-description {

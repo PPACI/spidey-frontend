@@ -40,7 +40,6 @@ export default class GraphRenderer extends React.Component {
             userNode: {
                 x: 0,
                 y: 0,
-                zoom: 1,
                 ratioX: 1,
                 ratioY: 1
             }
@@ -205,7 +204,6 @@ export default class GraphRenderer extends React.Component {
                     ...this.state.userNode,
                     x: node.x,
                     y: node.y,
-                    zoom: this.sigma.camera.ratio * this.sigma.camera.settings('zoomingRatio'),
                     userName: user.userName,
                     description: user.description,
                     profilePictureUrl: (user.profilePictureUrl || '').replace('_normal', ''),

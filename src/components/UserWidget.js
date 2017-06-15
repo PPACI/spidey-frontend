@@ -17,9 +17,10 @@ export default class UserWidget extends React.Component {
             </div>
 
             <header style={this.getBanner()}>
-                <div className="user-username">{this.props.userName}</div>
                 <img className="user-picture" src={this.props.profilePictureUrl} alt="Avatar" />
             </header>
+
+            <div className="user-username">{this.props.userName}</div>
 
             <div className="user-description">
                 {this.props.description}
@@ -31,7 +32,7 @@ export default class UserWidget extends React.Component {
         const [ top, left ] = [
             this.props.y / this.props.ratioY,
             this.props.x / this.props.ratioX
-        ].map(coordinate => isNaN(coordinate) ? 0 : coordinate * this.props.zoom);
+        ].map(coordinate => isNaN(coordinate) ? 0 : coordinate);
 
         return {
             top: top,
