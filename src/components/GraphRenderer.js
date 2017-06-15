@@ -8,7 +8,7 @@ import UserWidget from './UserWidget';
 
 import "../styles/GraphRenderer.css";
 import Colors from "../utils/colors";
-import {THRESHOLD, THRESHOLD_UP} from "../utils/constants";
+import {THRESHOLD} from "../utils/constants";
 
 const sigmaStyle = {
     width: "auto",
@@ -92,15 +92,7 @@ export default class GraphRenderer extends React.Component {
         const node = nodes.find((node) => node.label.toLowerCase().indexOf(text) > -1);
         if(!node) return;
 
-        setTimeout(() => {
-            nodes.forEach(n => {
-                this.setPreviousColor(n);
-                n.color = n.previousColor;
-            });
-
-            this.selectNode(node);
-            this.sigma.refresh(sigmaRefreshSettings);
-        }, THRESHOLD);
+        setTimeout(() => this.selectNode(node), THRESHOLD);
 
         window.sigma.misc.animation.camera(
             this.sigma.camera,
@@ -121,70 +113,86 @@ export default class GraphRenderer extends React.Component {
         const { sigma } = sigmaWrapper ;
 
         this.sigma = sigma;
-        this.bindEvents(sigma);
-        this.computeRatios(sigma);
-    };
 
-    bindEvents = (sigma) => {
-        sigma.bind('overNode', (e) => {
+        const nodes = this.sigma.graph.nodes();
+
+        nodes.forEach(node => {
+            if(!node.previousColor) {
+                node.previousColor = node.color;
+            }
+        });
+
+        this.sigma.bind('overNode', (e) => {
             document.body.style.cursor = 'pointer';
-
             this.selectNode(e.data.node);
-            this.sigma.refresh(sigmaRefreshSettings);
         });
 
-        sigma.bind('outNode', (e) => {
+        this.sigma.bind('outNode', (e) => {
             document.body.style.cursor = 'inherit';
-
-            e.data.node.color = e.data.node.previousColor;
-            this.sigma.refresh(sigmaRefreshSettings);
+            this.unSelectNode(e.data.node);
         });
 
-        sigma.bind('clickStage', () => {
+        this.sigma.bind('clickStage', () => {
             setTimeout(() => this.closeUserWidget(), 0);
         });
     };
 
-    setPreviousColor = (node) => {
-        if(!node.previousColor) {
-           node.previousColor = node.color;
+    selectNode = (node) => {
+        const nodes = this.sigma.graph.nodes();
+
+        nodes.forEach(n => {
+            n.color = n.previousColor;
+        });
+
+        node.color = Colors.PRIMARY;
+        this.sigma.refresh(sigmaRefreshSettings);
+    };
+
+    unSelectNode = (node) => {
+        node.color = node.previousColor;
+        this.sigma.refresh(sigmaRefreshSettings);
+    };
+
+    handleRatios = () => {
+        const { ratioX, ratioY } = this.state.userNode;
+
+        if(ratioX === 1 && ratioY === 1) {
+            this.computeRatios();
         }
     };
 
-    selectNode = (node) => {
-        this.setPreviousColor(node);
-        node.color = Colors.PRIMARY;
-    };
+    computeRatios = () => {
+        const nodes = this.sigma.graph.nodes();
 
-    computeRatios = (sigma) => {
-        setTimeout(() => {
-            const nodes = sigma.graph.nodes();
+        const nodesX = nodes.map(n => n.x);
+        const nodesY = nodes.map(n => n.y);
 
-            const nodesX = nodes.map(n => n.x);
-            const nodesY = nodes.map(n => n.y);
+        const [ minX, maxX, minY, maxY ] = [
+            Math.min(...nodesX),
+            Math.max(...nodesX),
+            Math.min(...nodesY),
+            Math.max(...nodesY)
+        ].map(Math.abs);
 
-            const [ minX, maxX, minY, maxY ] = [
-                Math.min(...nodesX),
-                Math.max(...nodesX),
-                Math.min(...nodesY),
-                Math.max(...nodesY)
-            ].map(Math.abs);
+        const [ ratioX, ratioY ] = [
+            minX + maxX,
+            minY + maxY
+        ].map(r => r / 200);
 
-            const ratioX = (minX + maxX) / 200;
-            const ratioY = (minY + maxY) / 200;
+        const ratios = { ratioX, ratioY };
 
-            const ratios = { ratioX, ratioY };
-
-            const { userNode } = this.state;
-            const newUserNode = Object.assign({}, userNode, ratios);
-            this.setState({ userNode: newUserNode });
-        }, THRESHOLD_UP);
+        const { userNode } = this.state;
+        const newUserNode = Object.assign({}, userNode, ratios);
+        this.setState({ userNode: newUserNode });
     };
 
     handleClickNode = (e) => {
         const { node } = e.data;
 
         console.log("node", node);
+
+        // Handle computing of ratios only the first time
+        this.handleRatios();
 
         this.props.twitterService.getUser(node.label)
             .then(user => {
