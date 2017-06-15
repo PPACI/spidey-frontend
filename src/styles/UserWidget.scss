@@ -10,7 +10,6 @@
 
   position: absolute;
   z-index: 9999;
-  transform: translate(170%, 50%);
   background-color: #fff;
   border: 1px solid #DADADA;
   box-sizing: border-box;
@@ -72,4 +71,11 @@
   .user-description {
     padding: 20px;
   }
+}
+
+@media (min-width: 768px) {
+  .user-widget {
+    transform: translate(130%, 50%);
+  }
+
 }

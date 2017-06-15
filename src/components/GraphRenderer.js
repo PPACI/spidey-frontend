@@ -40,6 +40,7 @@ export default class GraphRenderer extends React.Component {
             userNode: {
                 x: 0,
                 y: 0,
+                zoom: 1,
                 ratioX: 1,
                 ratioY: 1
             }
@@ -179,11 +180,13 @@ export default class GraphRenderer extends React.Component {
             minY + maxY
         ].map(r => r / 200);
 
-        const ratios = { ratioX, ratioY };
+        const userNode = {
+            ...this.state.userNode,
+            ratioX,
+            ratioY
+        };
 
-        const { userNode } = this.state;
-        const newUserNode = Object.assign({}, userNode, ratios);
-        this.setState({ userNode: newUserNode });
+        this.setState({ userNode });
     };
 
     handleClickNode = (e) => {
@@ -199,8 +202,10 @@ export default class GraphRenderer extends React.Component {
                 console.info("user", user);
 
                 const userNode = {
+                    ...this.state.userNode,
                     x: node.x,
                     y: node.y,
+                    zoom: this.sigma.camera.ratio * this.sigma.camera.settings('zoomingRatio'),
                     userName: user.userName,
                     description: user.description,
                     profilePictureUrl: (user.profilePictureUrl || '').replace('_normal', ''),
@@ -216,13 +221,12 @@ export default class GraphRenderer extends React.Component {
 
 
     closeUserWidget = (e) => {
-        const { userNode } = this.state;
-
-        const newUserNode = Object.assign({}, userNode, {
+        const userNode = {
+            ...this.state.userNode,
             isShown: false
-        });
+        };
 
-        this.setState({ userNode: newUserNode });
+        this.setState({ userNode });
     };
 
 }
