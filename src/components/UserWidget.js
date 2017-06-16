@@ -32,11 +32,13 @@ export default class UserWidget extends React.Component {
         const [ top, left ] = [
             this.props.y / this.props.ratioY,
             this.props.x / this.props.ratioX
-        ].map(coordinate => isNaN(coordinate) ? 0 : coordinate);
+        ].map(coordinate => isNaN(coordinate) ? 0 : coordinate * this.props.zoom);
+
+        console.log({ top, left });
 
         return {
-            top: top,
-            left: left,
+            top: `calc(50% + ${top}px)`,
+            left: `calc(50% + ${left}px)`,
             width: userWidgetWidth
         };
     };

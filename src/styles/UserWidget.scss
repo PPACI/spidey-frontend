@@ -9,6 +9,7 @@
   }
 
   position: absolute;
+  transform: translate(-50%, -50%);
   z-index: 9999;
   background-color: #fff;
   border: 1px solid #DADADA;
@@ -68,11 +69,4 @@
   .user-description {
     padding: 20px;
   }
-}
-
-@media (min-width: 768px) {
-  .user-widget {
-    transform: translate(130%, 50%);
-  }
-
 }
