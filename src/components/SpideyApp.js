@@ -20,6 +20,18 @@ export default class SpideyApp extends React.Component {
         this.state = { drawerOpened: false };
     }
 
+    showMenu = () => {
+        this.setState({ drawerOpened: true });
+    };
+
+    hideMenu = () => {
+      this.setState({ drawerOpened: false });
+    };
+
+    handleRequestChange = (drawerOpened) => {
+        this.setState({drawerOpened});
+    };
+
     render() {
         const muiTheme = getMuiTheme({
             palette: {
@@ -46,15 +58,4 @@ export default class SpideyApp extends React.Component {
         );
     }
 
-    showMenu = () => {
-        this.setState({ drawerOpened: true });
-    };
-
-    hideMenu = () => {
-      this.setState({ drawerOpened: false });
-    };
-
-    handleRequestChange = (drawerOpened) => {
-        this.setState({drawerOpened});
-    };
 }

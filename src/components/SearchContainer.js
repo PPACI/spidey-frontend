@@ -10,6 +10,16 @@ export default class SearchContainer extends React.Component {
         this.state = { graph: null, isLoading: false };
     }
 
+    getGraph = (text) => {
+        this.setState({isLoading: true});
+
+        this.props.twitterService.getGraph(text)
+            .then((graph) => {
+                this.setState({ graph: graph, isLoading: false });
+            })
+            .catch((err) => console.error("TwitterService - getGraph", err));
+    };
+
     render() {
         return (
             <div>
@@ -18,16 +28,5 @@ export default class SearchContainer extends React.Component {
             </div>
         );
     }
-
-    getGraph = (text) => {
-        this.setState({isLoading: true});
-
-        this.props.twitterService.getGraph(text)
-            .then((graph) => {
-                console.log(graph);
-                this.setState({ graph: graph, isLoading: false });
-            })
-            .catch((err) => console.error("TwitterService - getGraph", err));
-    };
 
 }

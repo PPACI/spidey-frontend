@@ -14,19 +14,6 @@ export default class SearchBar extends React.Component {
         this.state = { text: null, active: false };
     }
 
-    render() {
-        return (
-            <div className="form-wrapper">
-                <form className="search-bar-wrapper" onSubmit={this.handleSubmit}>
-                    <TextField className="search-bar" floatingLabelText="Twitter username"
-                                underlineStyle={underlineStyle} underlineShow={!this.state.active}
-                                onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur} />
-                    <RaisedButton secondary={true} type="submit" label="OK" />
-                </form>
-            </div>
-        );
-    }
-
     handleChange = (e) => {
         this.setState({ text: e.target.value });
     };
@@ -41,9 +28,20 @@ export default class SearchBar extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-
-        console.log("Twitter username", this.state.text);
         this.props.handler(this.state.text);
     };
+
+    render() {
+        return (
+            <div className="form-wrapper">
+                <form className="search-bar-wrapper" onSubmit={this.handleSubmit}>
+                    <TextField className="search-bar" floatingLabelText="Twitter username"
+                               underlineStyle={underlineStyle} underlineShow={!this.state.active}
+                               onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur} />
+                    <RaisedButton secondary={true} type="submit" label="OK" />
+                </form>
+            </div>
+        );
+    }
 
 }
