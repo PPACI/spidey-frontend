@@ -206,7 +206,7 @@ export default class GraphRenderer extends React.Component {
                             <b>To get a graph, please enter a Twitter username</b> :
                             <Sigma renderer="webgl" graph={this.props.graph} settings={sigmaSettings}
                                    ref={ this.initSigmaContext } onClickNode={this.handleClickNode} style={sigmaStyle}>
-                                <ForceAtlas2 />
+                                <ForceAtlas2 scalingRatio={10} slowDown={0.3} linLogMode iterationsPerRender={5} timeout={15000}/>
                             </Sigma>
                 }</div>
             </Paper>
