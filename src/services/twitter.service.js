@@ -1,4 +1,5 @@
 import generateRandomGraph from '../utils/generateRandomGraph';
+import * as axios from "axios";
 
 export default class TwitterService {
 
@@ -16,8 +17,8 @@ export default class TwitterService {
         //     color: '#'+Math.floor(Math.random()*16777215).toString(16)
         // }));
 
-        return fetch(`http://localhost:8080/graph/${userName}`)
-                    .then(graph => graph.json());
+        return axios.get(`http://localhost:8080/graph/${userName}`)
+                    .then((response) => response.data);
 
 
         /*const graph = generateRandomGraph();
@@ -29,8 +30,8 @@ export default class TwitterService {
     }
 
     getUser(userName) {
-        return fetch(`http://localhost:8080/user/${userName}`)
-                    .then(user => user.json());
+        return axios.get(`http://localhost:8080/user/${userName}`)
+                    .then((response) => response.data);
     }
 
 }

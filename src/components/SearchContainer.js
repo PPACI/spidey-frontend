@@ -17,7 +17,9 @@ export default class SearchContainer extends React.Component {
             .then((graph) => {
                 this.setState({ graph: graph, isLoading: false });
             })
-            .catch((err) => console.error("TwitterService - getGraph", err));
+            .catch((err) => {
+                console.error("TwitterService - getGraph", err);
+            });
     };
 
     render() {

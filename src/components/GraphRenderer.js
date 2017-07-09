@@ -22,11 +22,6 @@ const sigmaSettings = {
     enableHovering: false
 };
 
-const refreshIndicatorStyle = {
-    display: 'inline-block',
-    position: 'relative'
-};
-
 const sigmaRefreshSettings = { skipIndexation: true };
 
 export default class GraphRenderer extends React.Component {
@@ -159,8 +154,6 @@ export default class GraphRenderer extends React.Component {
 
         this.props.twitterService.getUser(node.label)
             .then(user => {
-                console.info("user", user);
-
                 const userNode = {
                     ...this.state.userNode,
                     x: node.x,
