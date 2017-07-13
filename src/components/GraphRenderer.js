@@ -16,10 +16,11 @@ const sigmaStyle = {
 };
 
 const sigmaSettings = {
-    labelThreshold: 10,
-    minNodeSize: 1,
-    maxNodeSize: 7,
-    enableHovering: false
+    labelThreshold: 15,
+    minNodeSize: 3,
+    maxNodeSize: 15,
+    enableHovering: false,
+    minArrowSize: 4
 };
 
 const refreshIndicatorStyle = {
