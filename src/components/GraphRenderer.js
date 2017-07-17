@@ -16,10 +16,11 @@ const sigmaStyle = {
 };
 
 const sigmaSettings = {
-    labelThreshold: 10,
-    minNodeSize: 1,
-    maxNodeSize: 7,
-    enableHovering: false
+    labelThreshold: 15,
+    minNodeSize: 3,
+    maxNodeSize: 15,
+    enableHovering: false,
+    minArrowSize: 4
 };
 
 const sigmaRefreshSettings = { skipIndexation: true };
@@ -206,7 +207,7 @@ export default class GraphRenderer extends React.Component {
                             <b>To get a graph, please enter a Twitter username</b> :
                             <Sigma renderer="webgl" graph={this.props.graph} settings={sigmaSettings}
                                    ref={ this.initSigmaContext } onClickNode={this.handleClickNode} style={sigmaStyle}>
-                                <ForceAtlas2 scalingRatio={10} slowDown={0.3} linLogMode iterationsPerRender={5} timeout={15000}/>
+                                <ForceAtlas2 scalingRatio={10} slowDown={0.3} linLogMode iterationsPerRender={5} timeout={3000}/>
                             </Sigma>
                 }</div>
             </Paper>
