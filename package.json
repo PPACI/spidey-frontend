@@ -9,7 +9,8 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-sigma": "^1.2.17",
-    "react-tap-event-plugin": "^2.0.1"
+    "react-tap-event-plugin": "^2.0.1",
+    "react-toastr": "^2.8.2"
   },
   "devDependencies": {
     "node-sass-chokidar": "0.0.2",

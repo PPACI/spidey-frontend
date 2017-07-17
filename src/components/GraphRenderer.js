@@ -9,6 +9,7 @@ import GraphLoader from "./GraphLoader";
 import "../styles/GraphRenderer.css";
 import Colors from "../utils/colors";
 import {THRESHOLD} from "../utils/constants";
+import errorRenderer from "../utils/errorRenderer";
 
 const sigmaStyle = {
     width: "auto",
@@ -170,7 +171,12 @@ export default class GraphRenderer extends React.Component {
 
                 this.setState({ userNode });
             })
-            .catch(e => console.error("[twitterService.getUser]", e))
+            .catch((err) => {
+                this.props.toastr.error(
+                    <div>For user <strong>{ `${node.label}` }</strong>: { `${errorRenderer(err)}` }</div>,
+                    `User details retrieving failed`
+                );
+            })
     };
 
 

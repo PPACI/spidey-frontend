@@ -2,6 +2,7 @@ import React from 'react';
 
 import SearchBar from './SearchBar';
 import GraphRenderer from './GraphRenderer';
+import errorRenderer from "../utils/errorRenderer";
 
 export default class SearchContainer extends React.Component {
 
@@ -18,7 +19,10 @@ export default class SearchContainer extends React.Component {
                 this.setState({ graph: graph, isLoading: false });
             })
             .catch((err) => {
-                console.error("TwitterService - getGraph", err);
+                this.props.toastr.error(
+                    <div>For user <strong>{ `${text}` }</strong>: { `${errorRenderer(err)}` }</div>,
+                    `Graph generation failed`
+                );
             });
     };
 
@@ -26,7 +30,8 @@ export default class SearchContainer extends React.Component {
         return (
             <div>
                 <SearchBar handler={this.getGraph} />
-                <GraphRenderer graph={this.state.graph} isLoading={this.state.isLoading} twitterService={this.props.twitterService} />
+                <GraphRenderer graph={this.state.graph} isLoading={this.state.isLoading}
+                               twitterService={this.props.twitterService} toastr={this.props.toastr} />
             </div>
         );
     }
