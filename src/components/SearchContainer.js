@@ -12,13 +12,15 @@ export default class SearchContainer extends React.Component {
     }
 
     getGraph = (text) => {
-        this.setState({isLoading: true});
+        this.setState({ isLoading: true });
 
         this.props.twitterService.getGraph(text)
             .then((graph) => {
                 this.setState({ graph: graph, isLoading: false });
             })
             .catch((err) => {
+                this.setState({ graph: null, isLoading: false });
+
                 this.props.toastr.error(
                     <div>For user <strong>{ `${text}` }</strong>: { `${errorRenderer(err)}` }</div>,
                     `Graph generation failed`
