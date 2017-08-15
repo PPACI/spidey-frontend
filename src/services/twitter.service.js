@@ -17,7 +17,7 @@ export default class TwitterService {
         //     color: '#'+Math.floor(Math.random()*16777215).toString(16)
         // }));
 
-        return axios.get(`http://localhost:8080/graph/${userName}`)
+        return axios.get(`http://spidey.aviato.fr:8080/graph/${userName}`)
                     .then((response) => response.data);
 
 
@@ -30,7 +30,7 @@ export default class TwitterService {
     }
 
     getUser(userName) {
-        return axios.get(`http://localhost:8080/user/${userName}`)
+        return axios.get(`http://spidey.aviato.fr:8080/user/${userName}`)
                     .then((response) => response.data);
     }
 
